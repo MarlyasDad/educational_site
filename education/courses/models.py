@@ -22,27 +22,34 @@ class Category(models.Model):
 
 
 class Course(models.Model):
+    LEVEL_EASY = 1
+    LEVEL_MEDIUM = 2
+    LEVEL_HARD = 3
     LEVEL_OF_COMPLEXITY = (
-        (1, 'EASY'),
-        (2, 'MEDIUM'),
-        (3, 'HARD'),
-        (4, 'IMPOSSIBLE'),
+        (LEVEL_EASY, 'EASY'),
+        (LEVEL_MEDIUM, 'MEDIUM'),
+        (LEVEL_HARD, 'HARD'),
     )
+    DURATION_DAY = 1
+    DURATION_WEEK = 2
+    DURATION_MONTH = 3
+    DURATION_HALF_YEAR = 4
+    DURATION_YEAR = 5
 
     AVERAGE_DURATION = (
-        (1, '<= 1 day'),
-        (2, '<= 1 week'),
-        (3, '<= 1 month'),
-        (4, '<= 6 month'),
-        (5, '<= 1 year'),
+        (DURATION_DAY, '<= 1 day'),
+        (DURATION_WEEK, '<= 1 week'),
+        (DURATION_MONTH, '<= 1 month'),
+        (DURATION_HALF_YEAR, '<= 6 month'),
+        (DURATION_YEAR, '<= 1 year'),
     )
 
     title = models.CharField(max_length=254)
     text = models.TextField()
-    time_to_read = models.IntegerField(choices=AVERAGE_DURATION)
-    level = models.IntegerField(choices=LEVEL_OF_COMPLEXITY, default=2)
-    author = models.ForeignKey(Author, on_delete=models.PROTECT)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
+    time_to_read = models.PositiveSmallIntegerField(choices=AVERAGE_DURATION, default=LEVEL_MEDIUM)
+    level = models.PositiveSmallIntegerField(choices=LEVEL_OF_COMPLEXITY, default=DURATION_MONTH)
+    author = models.ForeignKey(Author, on_delete=models.PROTECT, null=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
 
 class Lesson(models.Model):
@@ -50,14 +57,14 @@ class Lesson(models.Model):
     title = models.CharField(max_length=254, default='Unnamed lesson')
     description = models.CharField(max_length=254, blank=True)
     text = models.TextField(blank=True)
-    video = models.CharField(max_length=254, null=True)  # Path to video file
-    stream_url = models.CharField(max_length=254, null=True)  # Stream url (like zoom)
-    materials = models.CharField(max_length=254, null=True)  # Link to materials repository
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, null=True)
-    is_live = models.BooleanField(default=False)  # 1 - is live, 0 - is recorded
+    video = models.FileField(null=True)  # Path to video file
+    stream_url = models.URLField(null=True)
+    materials = models.URLField(null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    is_live = models.BooleanField(default=False)
 
 
 class Schedule(models.Model):
     start = models.DateTimeField()
-    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True)
+    lesson = models.OneToOneField(Lesson, on_delete=models.PROTECT, null=False)
     is_cancelled = models.BooleanField(default=False)
