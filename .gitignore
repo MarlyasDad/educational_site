@@ -7,3 +7,4 @@ build/*
 *.db
 *.sqlite3
 settings_local.py
+mysqlclient-python-master/*
