@@ -21,7 +21,14 @@ class CourseUser(AbstractUser, SendEmailMixin):
     sex = models.CharField('Пол', max_length=1, choices=SEX_CHOICES,
                            default=SEX_CHOICES[0][0])
 
+    # def __str__(self):
+    #     return f'{self.first_name} {self.last_name} ({self.username}), ' \
+    #            f'{self.email}, {self.city}, {self.get_sex_display()}, ' \
+    #            f'{self.birth_date}'
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.username}), ' \
-               f'{self.email}, {self.city}, {self.get_sex_display()}, ' \
-               f'{self.birth_date}'
+        return self.full_name

@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from .models import Author, Course, Category, Lesson, Schedule
+from .models import Course, Category, Lesson, Schedule
 
 
-@admin.register(Author)
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = 'id', 'first_name', 'last_name', 'full_name'
-    list_display_links = 'id', 'full_name'
+# @admin.register(Author)
+# class AuthorAdmin(admin.ModelAdmin):
+#     list_display = 'id', 'first_name', 'last_name', 'full_name'
+#     list_display_links = 'id', 'full_name'
 
 
 @admin.register(Category)

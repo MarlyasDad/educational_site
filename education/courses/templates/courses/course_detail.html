@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ course.title }} {% endblock title %}
+
+{% block content %}
+<div class="row px-3">
+    <div class="d-inline-block col-sm-12 col-md-12 col-lg-6 p-0 mb-3 mb-sm-3 mt-0">
+        <h5 class="d-inline p-0">Информация о курсе</h5>
+    </div>
+</div>
+<h3 class="mb-3"> {{ course.title }} </h3>
+{% if user.is_authenticated and course.author.username == user.get_username %}
+<a href="{% url 'courses:update_course' course.id %}" class="btn btn-secondary" role="button">Редактировать</a>
+<a href="{% url 'courses:delete_course' course.id %}" class="btn btn-danger" role="button">Удалить</a>
+{% endif %}
+<div class="my-3">Автор: {{ course.author.get_full_name }}</div>
+<div class="my-3">{{ course.text }}</div>
+<div class="my-3">Среднее время прохождения: {{ course.get_time_to_read_display }}</div>
+<div class="my-3">Сложность курса: {{ course.get_level_display }}</div>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th class="text-center" scope="col" style="width: 170px;">Start</th>
+            <th class="text-center" scope="col" style="width: 280px;">Title</th>
+            <th class="text-center" scope="col">Description</th>
+            <th class="text-center" scope="col">Live</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for lesson in course.lesson_set.all %}
+        <tr>
+            <td class="text-center"> {{ lesson.schedule.start|date:'d.m.Y H:m' }}</td>
+            <td> {{ lesson.title }}</td>
+            <td> {{ lesson.description }}</td>
+            <td class="text-center">
+                {% if lesson.is_live %} Yes {% else %} No {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    <tbody>
+ </table>
+
+<!--    start = models.DateTimeField(null=True)-->
+<!--    title = models.CharField(max_length=254)-->
+<!--    text = models.TextField()-->
+<!--    time_to_read = models.PositiveSmallIntegerField(choices=AVERAGE_DURATION, default=DURATION_MONTH)-->
+<!--    level = models.PositiveSmallIntegerField(choices=LEVEL_OF_COMPLEXITY, default=LEVEL_MEDIUM)-->
+<!--    author = models.ForeignKey(Author, on_delete=models.PROTECT, null=False)-->
+<!--    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)-->
+
+{% endblock content %}

@@ -1,24 +1,19 @@
 from django.db import models
-
-
-class Author(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254)
-
-    @property
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
-
-    def __str__(self):
-        return self.full_name
+from authapp.models import CourseUser
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=254)
+    name = models.CharField(max_length=254, unique=True)
+    alias = models.CharField(max_length=254, unique=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f'<Category: {self.name}>'
 
 
 class Course(models.Model):
@@ -44,16 +39,22 @@ class Course(models.Model):
         (DURATION_YEAR, '<= 1 year'),
     )
 
+    start = models.DateField(null=True)
     title = models.CharField(max_length=254)
     text = models.TextField()
-    time_to_read = models.PositiveSmallIntegerField(choices=AVERAGE_DURATION, default=LEVEL_MEDIUM)
-    level = models.PositiveSmallIntegerField(choices=LEVEL_OF_COMPLEXITY, default=DURATION_MONTH)
-    author = models.ForeignKey(Author, on_delete=models.PROTECT, null=False)
+    time_to_read = models.PositiveSmallIntegerField(choices=AVERAGE_DURATION, default=DURATION_MONTH)
+    level = models.PositiveSmallIntegerField(choices=LEVEL_OF_COMPLEXITY, default=LEVEL_MEDIUM)
+    author = models.ForeignKey(CourseUser, on_delete=models.PROTECT, null=False)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def __repr__(self):
+        return f'<Course: {self.title} {self.author} {self.category.name} {self.time_to_read}>'
 
 
 class Lesson(models.Model):
-
     title = models.CharField(max_length=254, default='Unnamed lesson')
     description = models.CharField(max_length=254, blank=True)
     text = models.TextField(blank=True)

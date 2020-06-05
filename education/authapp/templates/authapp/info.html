@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ course.title }} {% endblock title %}
+
+{% block content %}
+<div class="row px-3">
+    <div class="d-inline-block col-sm-12 col-md-12 col-lg-6 p-0 mb-3 mb-sm-3 mt-0">
+        <h5 class="d-inline p-0">Информация о пользователе {{ user.get_full_name }}</h5>
+    </div>
+</div>
+<div class="my-3">ID: {{ user.id }}</div>
+<div class="my-3">Логин: {{ user.username }}</div>
+<div class="my-3">Эл. почта: {{ user.email }}</div>
+<div class="my-3">Город: {{ user.city }}</div>
+{% endblock content %}

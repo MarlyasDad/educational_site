@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %} Все курсы {% endblock title %}
+
+{% block content %}
+<div class="row px-3">
+    <div class="d-inline-block col-sm-12 col-md-12 col-lg-6 p-0 mb-3 mb-sm-3 mt-0">
+        <h5 class="d-inline p-0">{% if category %}{{category}}{% else %}Все курсы{% endif %}</h5>
+        {% if search %}<h5 class="d-inline p-1 ml-2 bg-primary"> Поиск: {{search}}</h5>{% endif %}
+    </div>
+</div>
+{% if courses_list %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 170px;">Start</th>
+                <th scope="col" style="width: 380px;">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Level</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses_list %}
+            <tr>
+                <td scope="row"> {{ course.start|date:'d.m.Y' }} </td>
+                <td><a href="{% url 'courses:course_detail' course.id %}"> {{ course.title }} </a></td>
+                <td> {{ course.author.get_full_name }}</td>
+                <td> {{ course.get_level_display }}</td>
+                <td> {{ course.category.name }} </td>
+            </tr>
+        {% endfor %}
+        <tbody>
+     </table>
+{% else %}
+    <p>Курсы не найдены!!! :(</p>
+{% endif %}
+
+{% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center mt-3 mb-0">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="/?page={{ page_obj.previous_page_number }}">Назад</a></li>
+            {% endif %}
+            <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="/?page={{ page_obj.next_page_number }}">Вперёд</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock content %}
