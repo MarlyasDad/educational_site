@@ -19,7 +19,7 @@
 
 ## Для запуска требуется:
 * Python >=3.8
-* django >= 3
+* django >= 3.0.7
 * mysqlclient = latest (for connecting Django to MySQL)
 * MySQL >= 5.7
 * mixer >= 6.1.3
