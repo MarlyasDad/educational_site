@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.urls import reverse_lazy
+from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, CreateView,\
     UpdateView, DeleteView, ListView
 from .models import Course, Category
@@ -35,11 +35,9 @@ class CourseCreateView(CreateView):
 
     model = Course
     fields = ['start', 'title', 'text', 'time_to_read', 'level', 'category']
-    # fields = '__all__'
-    # success_url = '/'
 
     def get_success_url(self):
-        return '/detail_course/{}/'.format(self.object.pk)
+        return reverse('courses:course_detail', args=[self.object.pk, ])
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -52,7 +50,7 @@ class CourseUpdateView(UpdateView):
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return '/detail_course/{}/'.format(self.object.pk)
+        return reverse('courses:course_detail', args=[self.object.pk, ])
 
     def get_object(self, queryset=None):
         obj = super(CourseUpdateView, self).get_object()
