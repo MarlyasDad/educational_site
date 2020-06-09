@@ -1,21 +1,21 @@
 from django.core.management import BaseCommand
 from mixer.backend.django import mixer
 # from authapp.models import BlogUser
-from courses.models import Category, Course, Lesson, Author, Schedule
+from courses.models import Category, Course, Lesson, Schedule
 from authapp.models import CourseUser
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        pass
-        categories = mixer.cycle(10).blend(
-            Category,
-            name=mixer.sequence('Card', 'PC', 'Console', 'Board')
-        )
-
-        for category in categories:
-            category.save()
+        # pass
+        # categories = mixer.cycle(4).blend(
+        #     Category,
+        #     name=mixer.sequence('Card', 'PC', 'Console', 'Board')
+        # )
+        #
+        # for category in categories:
+        #     category.save()
 
         users = mixer.cycle(10).blend(CourseUser)
         for user in users:

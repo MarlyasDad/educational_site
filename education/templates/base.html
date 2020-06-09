@@ -32,6 +32,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Все курсы</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'feedback:create_feedback' %}">Обратная связь</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <form class="form-inline my-2 my-lg-0" name="find" action="/" method="get">
                     <div class="search-input-block col-12 col-sm-12 col-md-8 col-lg-8 p-0 pr-md-2">

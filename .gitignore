@@ -8,3 +8,4 @@ build/*
 *.sqlite3
 settings_local.py
 mysqlclient-python-master/*
+education/tmp/messages/*

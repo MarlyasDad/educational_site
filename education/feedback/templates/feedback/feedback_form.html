@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Написать отзыв {% endblock title %}
+
+{% block content %}
+<div class="d-inline-block col-sm-12 col-md-12 col-lg-12 p-0 mb-3 mb-sm-3 mt-0">
+    <h5 class="d-inline p-0">Напишите свой отзыв, чтобы мы могли улучшить качество своей работы.</h5>
+</div>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary">Отправить</button>
+</form>
+{% endblock content %}

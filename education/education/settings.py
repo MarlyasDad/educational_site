@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authapp.apps.AuthappConfig',
     'courses.apps.CoursesConfig',
+    'feedback.apps.FeedbackConfig',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -117,5 +119,20 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'authapp.CourseUser'
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0
+    }
+}
+
+RQ = {
+    'DEFAULT_RESULT_TTL': 5000,
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "tmp", "messages")
 
 from .settings_local import *

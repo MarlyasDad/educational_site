@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, CreateView,\
     UpdateView, DeleteView, ListView
@@ -32,7 +32,6 @@ class AllCoursesListView(ListView):
 
 
 class CourseCreateView(CreateView):
-
     model = Course
     fields = ['start', 'title', 'text', 'time_to_read', 'level', 'category']
 
@@ -71,5 +70,4 @@ class CourseDeleteView(DeleteView):
 
 
 class CourseDetailView(DetailView):
-
     model = Course

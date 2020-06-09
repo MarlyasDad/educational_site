@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('courses.urls', namespace='courses')),
     path('auth/', include('authapp.urls', namespace='auth')),
+    path('feedback/', include('feedback.urls', namespace='feedback')),
+    path('django-rq/', include('django_rq.urls')),
 ]

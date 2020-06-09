@@ -4,7 +4,7 @@ from authapp.models import CourseUser
 
 class Category(models.Model):
     name = models.CharField(max_length=254, unique=True)
-    alias = models.CharField(max_length=254, unique=True)
+    alias = models.CharField(max_length=254, null=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -66,6 +66,6 @@ class Lesson(models.Model):
 
 
 class Schedule(models.Model):
-    start = models.DateTimeField()
+    start = models.DateTimeField(null=True)
     lesson = models.OneToOneField(Lesson, on_delete=models.PROTECT, null=False)
     is_cancelled = models.BooleanField(default=False)
