@@ -9,9 +9,6 @@ class MyBaseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = f'form-control form-control-{field_name} w-100'
-            # field.help_text = ''
-            # if field_name == 'password':
-            #     field.widget = forms.HiddenInput()
 
 
 class FeedbackForm(MyBaseForm):
