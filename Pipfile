@@ -10,6 +10,11 @@ django = "*"
 redis = "*"
 rq = "*"
 django-rq = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-cov = "*"
+mixer = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"
