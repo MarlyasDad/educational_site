@@ -1,6 +1,6 @@
-#  Games Education - Chess, Checkers, Backgammon, Dominoes, Poker and others. Courses for players of any level!
+#  Games Education - Шашки, Шахматы, Нарды, Домино, Карточные, Настольные, ПК. Курсы и обзоры для игроков любого уровня.
 
-## Disclaimer
+## Примечание
 Сайт создан в учебных целях в рамках учебного курса по веб-разработке на языке Python - [otus.ru](https://otus.ru)
 
 ## Общая информация:
